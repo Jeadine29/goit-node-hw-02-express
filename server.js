@@ -1,7 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const usersRouter = require('./routes/users');
-const contactsRouter = require('./routes/contacts');
+const usersRouter = require('./routes/api/users');
+const contactsRouter = require('./routes/api/contacts');
 
 const app = express();
 app.use(express.json());
