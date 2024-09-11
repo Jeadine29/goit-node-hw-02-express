@@ -1,25 +1,28 @@
-require('dotenv').config();
 const express = require('express');
-const mongoose = require('mongoose');
-const usersRouter = require('./routes/users');
-const contactsRouter = require('./routes/contacts');
+const logger = require('morgan');
+const cors = require('cors');
+require('dotenv').config();
+
+const contactsRouter = require('./routes/api/contacts');
+const usersRouter = require('./routes/api/users');
 
 const app = express();
 
-// Middleware
+const formatsLogger = app.get('env') === 'development' ? 'dev' : 'short';
+
+app.use(logger(formatsLogger));
+app.use(cors());
 app.use(express.json());
 
-// Routes
-app.use('/users', usersRouter);
-app.use('/contacts', contactsRouter);
+app.use('/api/contacts', contactsRouter);
+app.use('/api/users', usersRouter);
 
-// Connect to MongoDB
-mongoose.connect(process.env.DB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log('MongoDB connected'))
-  .catch(err => console.error('MongoDB connection error:', err));
+app.use((req, res) => {
+  res.status(404).json({ message: 'Not found' });
+});
 
-app.listen(process.env.PORT || 3000, () => {
-  console.log('Server running on port', process.env.PORT || 3000);
+app.use((req, res) => {
+  res.status(404).json({ message: 'Not Found' });
 });
 
 module.exports = app;

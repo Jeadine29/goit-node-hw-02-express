@@ -1,10 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const contactsRouter = require('./api/contacts');
-const usersRouter = require('./api/users');
 
-// Mount routers
-router.use('/contacts', contactsRouter);
-router.use('/users', usersRouter);
+router.use('/api/contacts', require('./api/contacts'));
+router.use('/api/users', require('./api/users'));
 
 module.exports = router;
