@@ -10,10 +10,7 @@ const usersRouter = require('./routes/api/users');
 const app = express();
 
 // Connect to MongoDB
-mongoose.connect(process.env.DB_HOST, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
+mongoose.connect(process.env.DB_HOST)
   .then(() => console.log('MongoDB connected successfully'))
   .catch(err => console.error('MongoDB connection error:', err));
 
@@ -53,7 +50,7 @@ app.use((err, _, res, __) => {
   })
 });
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 
 const server = app.listen(PORT, function () {
   console.log(`Server running. Use our API on port: ${PORT}`)
